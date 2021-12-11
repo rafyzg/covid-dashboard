@@ -1,5 +1,5 @@
 import React from 'react';
-import { Carousel as AntCarousel, Row, Col, Select, Typography } from 'antd';
+import { Row, Col, Select, Typography } from 'antd';
 import { TweenOneGroup } from 'rc-tween-one';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import { getChildrenToRender } from './utils';
@@ -12,27 +12,26 @@ const country_data = [
       id: 1,
       name: 'Israel',
       value: 'Israel',
-      numberOfDeath: 123,
-      numberOfInfected: 12333,
-      numberOfCurrentSick: 12,
+      numberOfDeath: 8210,
+      numberOfInfected: 1349385,
+      numberOfCurrentSick: 5939,
   },
   {
       id: 2,
-      name: 'US',
-      value: 'US',
-      numberOfDeath: 123,
-      numberOfInfected: 12333,
-      numberOfCurrentSick: 112,
+      name: 'USA',
+      value: 'USA',
+      numberOfDeath: 817652 ,
+      numberOfInfected: 50738765,
+      numberOfCurrentSick: 9955998,
 
   },
   {
       id: 3,
-      name: 'Columbia',
-      value: 'Columbia',
-      numberOfDeath: 123,
-      numberOfInfected: 12333,
-      numberOfCurrentSick: 122,
-
+      name: 'Colombia',
+      value: 'Colombia',
+      numberOfDeath: 129011,
+      numberOfInfected: 5089695,
+      numberOfCurrentSick: 30155,
   }
 ];
 
@@ -40,20 +39,6 @@ const formatDate = () => {
   const options = { year: "numeric", month: "long", weekday: 'long' }
   return new Date().toLocaleDateString(undefined, options)
 }
-
-const carouselProps = {
-  className: 'feature6-content',
-  dots: false,
-  wrapper: { className: 'feature6-content-wrapper' },
-  titleWrapper: {
-    className: 'feature6-title-wrapper',
-    barWrapper: {
-      className: 'feature6-title-bar-wrapper',
-      children: { className: 'feature6-title-bar' },
-    },
-    title: { className: 'feature6-title' },
-  }
-};
 
 class Content5 extends React.PureComponent {
   constructor(props) {

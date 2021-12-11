@@ -19,6 +19,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "yarn && react-app-rewired build",
+    "serve": "npx serve -s build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject"
   },

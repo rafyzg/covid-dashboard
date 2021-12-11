@@ -13,7 +13,7 @@ export const Nav00DataSource = {
         name: 'item0',
         className: 'header0-item',
         children: {
-          href: '#',
+          href: '#Content5',
           children: [
             {
               children: (
@@ -99,7 +99,7 @@ export const Nav00DataSource = {
         name: 'item2',
         className: 'header0-item',
         children: {
-          href: '#',
+          href: '#Content5_0',
           children: [
             {
               children: (
@@ -118,13 +118,13 @@ export const Nav00DataSource = {
         name: 'item3',
         className: 'header0-item',
         children: {
-          href: '#',
+          href: '#Content9_0',
           children: [
             {
               children: (
                 <span>
                   <p>
-                    All World Data<br />
+                    Covid Timeline<br />
                   </p>
                 </span>
               ),
@@ -142,7 +142,7 @@ export const Banner01DataSource = {
   textWrapper: { className: 'banner0-text-wrapper' },
   title: {
     className: 'banner0-title',
-    children: 'Choose Country',
+    children: '   ',
   },
   content: {
     className: 'banner0-content',
