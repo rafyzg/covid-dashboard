@@ -10,6 +10,8 @@ See Live Demo: https://covidanalytics.netlify.app/
 - react-countup
 
 ## Screenshots
+![Alt CountryData](screenshots/CountryData.png?raw=true "Title")
+![Alt CovidTimeline](screenshots/covidtimeline.png?raw=true "Title")
 
 
 ### Quick Start
