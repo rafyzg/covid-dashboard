@@ -1,7 +1,7 @@
 # Covid 19 Data Dashboard
 
 Covid 19 dashboard analytics visualization developed with React and Ant Design.
-See Live Stats: coviddashboard.netfliy.com
+See Live Demo: https://covidanalytics.netlify.app/
 
 ## Technologies
 
@@ -39,7 +39,7 @@ Then run the project:
 ```
 npm run start
 ```
-Visit the url : `http:localhost:3000`
+Visit the url : `http://localhost:3000`
 
 #### Docker 
 
