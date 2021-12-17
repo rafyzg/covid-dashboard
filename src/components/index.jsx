@@ -3,14 +3,13 @@
 import React from 'react';
 import { enquireScreen } from 'enquire-js';
 
-import Nav0 from './Nav0';
 import Banner0 from './Banner0';
 import Content5 from './Content5';
 import Content9 from './Content9';
+import Content10 from './Content10';
 import Footer1 from './Footer1';
 
 import {
-  Nav00DataSource,
   Banner01DataSource,
   Content50DataSource,
   Content90DataSource,
@@ -54,16 +53,16 @@ export default class Home extends React.Component {
 
   render() {
     const children = [
-      <Nav0
-        id="Nav0_0"
-        key="Nav0_0"
-        dataSource={Nav00DataSource}
-        isMobile={this.state.isMobile}
-      />,
       <Banner0
         id="Banner0_1"
         key="Banner0_1"
         dataSource={Banner01DataSource}
+        isMobile={this.state.isMobile}
+      />,
+      <Content10
+        id="Content9_0"
+        key="Content9_0"
+        dataSource={Content90DataSource}
         isMobile={this.state.isMobile}
       />,
       <Content5
@@ -99,17 +98,3 @@ export default class Home extends React.Component {
     );
   }
 }
-/*
-
-<Content0
-  id="Content0_0"
-  key="Content0_0"
-  dataSource={Content00DataSource}
-  isMobile={this.state.isMobile}
-/>,
-<Content3
-  id="Content3_0"
-  key="Content3_0"
-  dataSource={Content30DataSource}
-  isMobile={this.state.isMobile}
-/>,*/
