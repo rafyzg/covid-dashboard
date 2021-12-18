@@ -10,7 +10,7 @@ const GlobalLine = () => {
   }, []);
 
   const asyncFetch = () => {
-    fetch('https://gw.alipayobjects.com/os/bmw-prod/1d565782-dde4-4bb6-8946-ea6a38ccf184.json')
+    fetch('https://api.covid19api.com/total/dayone/country/usa')
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => {
@@ -20,8 +20,8 @@ const GlobalLine = () => {
   const config = {
     data,
     padding: 'auto',
-    xField: 'date',
-    yField: 'scales',
+    xField: 'Date',
+    yField: 'Active',
     xAxis: {
       // type: 'timeCat',
       tickCount: 5,

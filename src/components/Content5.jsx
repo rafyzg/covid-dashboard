@@ -92,7 +92,7 @@ class Content5 extends React.PureComponent {
         <div {...props} {...dataSource.wrapper}>
           <div {...dataSource.page}>
             <div key="title" {...dataSource.titleWrapper}>
-              <Title code>Country Information</Title>
+              <Title>Country Information</Title>
               <Select size="large" defaultValue="Israel" onChange = {this.onChangeCountry} style={{ width: 200}}>
               {
                   country_data.map((item, i) => {

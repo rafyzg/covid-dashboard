@@ -59,7 +59,7 @@ class Content10 extends React.PureComponent {
       <div {...props} {...dataSource.wrapper}>
         <div {...dataSource.page}>
           <div {...dataSource.titleWrapper}>
-          <Title code>Global Data</Title>
+          <Title>Global Data</Title>
           <Divider />
           <RangePicker picker="month"/>
           <Divider />
