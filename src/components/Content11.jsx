@@ -1,38 +1,43 @@
-import React from 'react';
-import { Divider } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Divider, Typography } from 'antd';
 import { API_URL } from './utils';
-
-import { useState, useEffect } from 'react';
 import { Column } from '@ant-design/charts';
+const { Title } = Typography;
 
-
-const adjustJsonToGraph = (countriesData) => {
+const adjustJsonToGraph = (continentData) => {
   let newData = [];
-  countriesData.forEach((country) => {
+  continentData.forEach((continent) => {
 
     newData.push({
-      continent: country.continent,
+      continent: continent.continent,
       type: "population",
-      value: country.population,
+      value: continent.population,
     });
 
     newData.push({
-      continent: country.continent,
+      continent: continent.continent,
       type: "Cases",
-      value: country.confirmedCases,
+      value: continent.cases,
     });
 
     newData.push({
-      continent: country.continent,
+      continent: continent.continent,
       type: "Deaths",
-      value: country.deaths,
+      value: continent.deaths,
     });
 
     newData.push({
-      continent: country.continent,
-      type: "Vaccinated",
-      value: country.vaccinated,
+      continent: continent.continent,
+      type: "Tests",
+      value: continent.tests,
     });
+
+    newData.push({
+      continent: continent.continent,
+      type: "Recovered",
+      value: continent.recovered,
+    });
+    
   });
   return newData;
 };
@@ -46,7 +51,7 @@ const Content11 = () => {
   }, []);
 
   const asyncFetch = () => {
-    fetch(`${API_URL}/Data/ByDate/Continents?Date=2022-01-01&threshold=7`)
+    fetch(`${API_URL}/continents`)
       .then((response) => response.json())
       .then((json) => setData(adjustJsonToGraph(json)))
       .catch((error) => {
@@ -65,7 +70,8 @@ const Content11 = () => {
   };
 
   return (
-    <div>
+    <div style={{backgroundColor: '#fafafa', textAlign: 'center'}}>
+      <Title>Continents Data</Title>
       <Divider />
       <Column {...config} />
     </div>

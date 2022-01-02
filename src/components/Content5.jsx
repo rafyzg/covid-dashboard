@@ -18,9 +18,8 @@ class Content5 extends React.PureComponent {
     super(props);
     this.state = {
       all_countries: [],
-      country_id: 68,
+      country: 'Israel',
       data: [],
-      v_data: [],
     };
   }
   componentDidMount() {
@@ -28,33 +27,61 @@ class Content5 extends React.PureComponent {
   }
 
   CountriesList = () => {
-    Promise.all([fetch(`${API_URL}/Data/Countries/${this.state.country_id}`), fetch(`${API_URL}/Data/AllCountries`)])
-    .then(([res1, res2,]) => {
-      return Promise.all([res1.json(), res2.json()])
+    Promise.all([
+      fetch(`${API_URL}/historical/${this.state.country}?lastdays=1`),
+      fetch(`${API_URL}/apple/countries`),
+      fetch(`${API_URL}/vaccine/coverage/countries/${this.state.country}?lastdays=1`),
+    ])
+    .then(([res1, res2, res3]) => {
+      return Promise.all([res1.json(), res2.json(), res3.json()])
     })
-    .then(([res1, res2]) => {
-      this.setState({ ...this.state, data: res1.diseaseData.at(-1), v_data: res1.vaccineData.at(-1), all_countries: res2})
+    .then(([res1, res2, res3]) => {
+      this.setState({
+        ...this.state,
+        data: {
+          cases: Object.values(res1.timeline.cases)[0],
+          deaths: Object.values(res1.timeline.deaths)[0],
+          recovered: Object.values(res1.timeline.recovered)[0],
+          vaccinated: Object.values(res3.timeline)[0],
+        },
+        all_countries: res2,
+      })
     })
     .catch((error) => {
       console.log('fetch data failed', error);
     });
   }
 
-  fetchCountryData = () => {
-    fetch(`${API_URL}/Data/Countries/${this.state.country_id}`)
-      .then((response) => response.json())
-      .then((json) => {
-        this.setState({ ...this.state, data: json.diseaseData.at(-1), v_data: json.vaccineData.at(-1) })
+  fetchCountryData = (e) => {
+    Promise.all([
+      fetch(`${API_URL}/historical/${e}?lastdays=1`),
+      fetch(`${API_URL}/vaccine/coverage/countries/${e}?lastdays=1`),
+    ])
+    .then(([res1, res2]) => {
+      return Promise.all([res1.json(), res2.json()])
+    })
+    .then(([res1, res2]) => {
+      this.setState({
+        ...this.state,
+        data: {
+          cases: Object.values(res1.timeline.cases)[0],
+          deaths: Object.values(res1.timeline.deaths)[0],
+          recovered: Object.values(res1.timeline.recovered)[0],
+          vaccinated: Object.values(res2.timeline)[0],
+          bla:1,
+        },
       })
-      .catch((error) => {
-        console.log('fetch data failed', error);
-      });
+      console.log(this.state);
+    })
+    .catch((error) => {
+      console.log('fetch data failed', error);
+    });
   }
 
   
   onChangeCountry = e => {
-    this.setState({ country: e, country_id: e });
-    this.fetchCountryData();
+    this.setState({ country: e });
+    this.fetchCountryData(e);
   }
   getChildrenToRender = (data) =>
   
@@ -70,13 +97,13 @@ class Content5 extends React.PureComponent {
             </p>
             <Title>
               {index === 0 ?
-                <CountUp end={this.state.data.confirmed} duration={3} separator="," />
+                <CountUp end={this.state.data.cases} duration={3} separator="," />
                 : index === 1 ? 
-                <CountUp end={this.state.data.confirmed - this.state.data.deaths} duration={3} separator="," />
+                <CountUp end={this.state.data.recovered} duration={3} separator="," />
                 : index === 2 ? 
                 <CountUp separator="," end={this.state.data.deaths} duration={3} /> 
                 :
-                <CountUp separator="," end={this.state.v_data.vaccinated} duration={3} /> }
+                <CountUp separator="," end={this.state.data.vaccinated} duration={3} /> }
             </Title>
             <Title level={5} type="secondary" code>{formatDate()}</Title>
             <Title level={5}>
@@ -103,9 +130,10 @@ class Content5 extends React.PureComponent {
               <Title>Country Information</Title>
               <Select size="large" defaultValue="Israel" onChange = {this.onChangeCountry} style={{ width: 200}}>
               {
-                  this.state.all_countries.map((item, i) => {
-                      return <Option value={item.id}>{item.name}</Option>
-                  })
+                //['Israel','Mexico'].forEach(item =>  <Option>{item}</Option>)
+                this.state.all_countries.map((item,i) =>
+                  <Option value={item}>{item}</Option>
+                )
               }
               </Select>
             </div>

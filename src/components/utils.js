@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from 'antd';
 
-export const API_URL = 'http://localhost:5000';
+export const API_URL = 'https://disease.sh/v3/covid-19';
 
 export const isImg = /^http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w-./?%&=]*)?/;
 export const getChildrenToRender = (item, i) => {

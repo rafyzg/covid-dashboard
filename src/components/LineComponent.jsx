@@ -1,58 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from '@ant-design/charts';
-import { Divider, DatePicker } from 'antd';
+import { Divider } from 'antd';
 import { API_URL } from './utils';
-import moment from 'moment';
-const { RangePicker } = DatePicker;
 
 const GlobalLine = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    asyncFetch('2020-01-01','2022-10-01');
+    asyncFetch();
   }, []);
-
-  const onChange = (value) => {
-    let dates = []
-    if(value) {
-      value.forEach((date) => {
-        let newDate = moment(date._d);
-        dates.push(newDate.format('YYYY-MM-DD'))
-      });
-    }
-    if(dates.length === 2) {
-      asyncFetch(dates[0], dates[1]);
-    }
-  }
 
   const getMultiLineJson = (json) => {
     let newJson = [];
-    json.forEach(item => {
+    for (const [key, value] of Object.entries(json.cases)) {
       newJson.push({
-        date: item.date,
-        value: item.confirmed,
+        date: key,
+        value,
         category: 'confirmed',
       });
-
+    }
+    for (const [key, value] of Object.entries(json.deaths)) {
       newJson.push({
-        date: item.date,
-        value: item.deaths,
+        date: key,
+        value,
         category: 'deaths',
       });
-
+    }
+    for (const [key, value] of Object.entries(json.recovered)) {
       newJson.push({
-        date: item.date,
-        value: item.recovered,
+        date: key,
+        value,
         category: 'recovered',
       });
-    });
+    }
     return newJson;
   };
 
-  const asyncFetch = (start, end) => {
-    fetch(`${API_URL}/Data/World?start=${start}&end=${end}`)
+  const asyncFetch = () => {
+    fetch(`${API_URL}/historical/all?lastdays=all`)
       .then((response) => response.json())
-      .then((json) => setData(getMultiLineJson(json.diseaseData)))
+      .then((json) => setData(getMultiLineJson(json)))
       .catch((error) => {
         console.log('fetch data failed', error);
       });
@@ -65,16 +52,17 @@ const GlobalLine = () => {
     yField: 'value',
     seriesField: 'category',
     xAxis: {
-      // type: 'timeCat',
       tickCount: 5,
     },
     smooth: true,
+    slider: {
+      start: 0.1,
+      end: 1.0,
+    },
   };
 
   return (
     <div>
-      <Divider />
-      <RangePicker onChange={onChange} picker="month"/>
       <Divider />
       <Line {...config} />
     </div>
