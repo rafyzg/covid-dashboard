@@ -58,3 +58,6 @@ docker build -t covid_dashboard .
 docker run 3000:3000 covid_dashboard 
 ```
 
+#### Notes
+
+Please star this repo if you found it useful.
