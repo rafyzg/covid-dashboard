@@ -2,6 +2,8 @@
 import React from 'react';
 import { Button } from 'antd';
 
+export const API_URL = 'https://disease.sh/v3/covid-19';
+
 export const isImg = /^http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w-./?%&=]*)?/;
 export const getChildrenToRender = (item, i) => {
   let tag = item.name.indexOf('title') === 0 ? 'h1' : 'div';
