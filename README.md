@@ -14,14 +14,18 @@ See Live Demo: https://covidanalytics.netlify.app/
 - react-countup
 
 ## Screenshots
+
+![Alt text](/screenshots/ContinentsData.PNG?raw=true "Continents Data")
+![Alt text](/screenshots/GlobalData.PNG?raw=true "Global Data")
 ![Alt text](/screenshots/CountryData.PNG?raw=true "Country Data")
 ![Alt text](/screenshots/covidtimeline.PNG?raw=true "Covid Timeline")
 
 
 ### Quick Start
 
-### Source
 You can run this project from source or running it as a docker container.
+
+### Source
 
 ```
 git clone https://github.com/rafyzg/covid-dashboard
