@@ -368,6 +368,23 @@ export const Content50DataSource = {
           content: { children: 'Deaths' },
         },
       },
+      {
+        name: 'block~kwtozuquues',
+        desc: 'Number of people vaccinated from COVID-19',
+        className: 'block',
+        md: 6,
+        xs: 24,
+        children: {
+          wrapper: {
+            className: 'content5-block-content kwtowm4dc7i-editor_css',
+          },
+          img: {
+            children:
+              'https://img.icons8.com/external-wanicon-lineal-color-wanicon/512/000000/external-vaccine-world-humanitarian-day-wanicon-lineal-color-wanicon.png',
+          },
+          content: { children: 'Vaccinated' },
+        },
+      },
     ],
   },
 };
@@ -1113,8 +1130,8 @@ export const Footer10DataSource = {
         title: { children: 'Menu' },
         childWrapper: {
           children: [
-            { href: '#', name: 'link0', children: 'Choose Country' },
-            { href: '#', name: 'link1', children: 'All World Daata' },
+            { href: '#Content9_0', name: 'link0', children: 'Choose Country' },
+            { href: '#Content0_0', name: 'link1', children: 'All World Daata' },
           ],
         },
       },

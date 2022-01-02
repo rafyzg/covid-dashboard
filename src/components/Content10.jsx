@@ -1,14 +1,13 @@
 import React from 'react';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
-import { Typography, Divider, DatePicker } from 'antd';
+import { Typography } from 'antd';
 import GlobalLine from './LineComponent';
-
 const { Title } = Typography;
-const { RangePicker } = DatePicker;
 
 
 class Content10 extends React.PureComponent {
+
   getBlockChildren = (block, i) => {
     const { isMobile } = this.props;
     const item = block.children;
@@ -60,9 +59,6 @@ class Content10 extends React.PureComponent {
         <div {...dataSource.page}>
           <div {...dataSource.titleWrapper}>
           <Title>Global Data</Title>
-          <Divider />
-          <RangePicker picker="month"/>
-          <Divider />
           <GlobalLine />
           </div>
         </div>

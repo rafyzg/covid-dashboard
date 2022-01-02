@@ -7,6 +7,7 @@ import Banner0 from './Banner0';
 import Content5 from './Content5';
 import Content9 from './Content9';
 import Content10 from './Content10';
+import Content11 from './Content11';
 import Footer1 from './Footer1';
 
 import {
@@ -29,26 +30,21 @@ export default class Home extends React.Component {
     super(props);
     this.state = {
       isMobile,
-      show: !location.port, // 如果不是 dva 2.0 请删除
+      show: !location.port,
     };
   }
 
   componentDidMount() {
-    // 适配手机屏幕;
     enquireScreen((b) => {
       this.setState({ isMobile: !!b });
     });
-    // dva 2.0 样式在组件渲染之后动态加载，导致滚动组件不生效；线上不影响；
-    /* 如果不是 dva 2.0 请删除 start */
     if (location.port) {
-      // 样式 build 时间在 200-300ms 之间;
       setTimeout(() => {
         this.setState({
           show: true,
         });
       }, 500);
     }
-    /* 如果不是 dva 2.0 请删除 end */
   }
 
   render() {
@@ -57,6 +53,12 @@ export default class Home extends React.Component {
         id="Banner0_1"
         key="Banner0_1"
         dataSource={Banner01DataSource}
+        isMobile={this.state.isMobile}
+      />,
+      <Content11
+        id="Content5_0"
+        key="Content5_0"
+        dataSource={Content50DataSource}
         isMobile={this.state.isMobile}
       />,
       <Content10

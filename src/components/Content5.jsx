@@ -3,36 +3,10 @@ import { Row, Col, Select, Typography } from 'antd';
 import { TweenOneGroup } from 'rc-tween-one';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import CountUp from 'react-countup';
+import { API_URL } from './utils';
 
 const { Title } = Typography;
 const { Option } = Select;
-const country_data = [
-  {
-      id: 1,
-      name: 'Israel',
-      value: 'Israel',
-      numberOfDeath: 8210,
-      numberOfInfected: 1349385,
-      numberOfCurrentSick: 5939,
-  },
-  {
-      id: 2,
-      name: 'USA',
-      value: 'USA',
-      numberOfDeath: 817652 ,
-      numberOfInfected: 50738765,
-      numberOfCurrentSick: 9955998,
-
-  },
-  {
-      id: 3,
-      name: 'Colombia',
-      value: 'Colombia',
-      numberOfDeath: 129011,
-      numberOfInfected: 5089695,
-      numberOfCurrentSick: 30155,
-  }
-];
 
 const formatDate = () => {
   const options = { year: "numeric", month: "long", weekday: 'long' }
@@ -43,13 +17,44 @@ class Content5 extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      country: "Israel",
-      country_id: 0,
+      all_countries: [],
+      country_id: 68,
+      data: [],
+      v_data: [],
     };
   }
+  componentDidMount() {
+    this.CountriesList();
+  }
+
+  CountriesList = () => {
+    Promise.all([fetch(`${API_URL}/Data/Countries/${this.state.country_id}`), fetch(`${API_URL}/Data/AllCountries`)])
+    .then(([res1, res2,]) => {
+      return Promise.all([res1.json(), res2.json()])
+    })
+    .then(([res1, res2]) => {
+      this.setState({ ...this.state, data: res1.diseaseData.at(-1), v_data: res1.vaccineData.at(-1), all_countries: res2})
+    })
+    .catch((error) => {
+      console.log('fetch data failed', error);
+    });
+  }
+
+  fetchCountryData = () => {
+    fetch(`${API_URL}/Data/Countries/${this.state.country_id}`)
+      .then((response) => response.json())
+      .then((json) => {
+        this.setState({ ...this.state, data: json.diseaseData.at(-1), v_data: json.vaccineData.at(-1) })
+      })
+      .catch((error) => {
+        console.log('fetch data failed', error);
+      });
+  }
+
   
   onChangeCountry = e => {
-    this.setState({ country: e});
+    this.setState({ country: e, country_id: e });
+    this.fetchCountryData();
   }
   getChildrenToRender = (data) =>
   
@@ -65,11 +70,13 @@ class Content5 extends React.PureComponent {
             </p>
             <Title>
               {index === 0 ?
-                <CountUp end={country_data.filter(obj => obj.name === this.state.country )[0].numberOfCurrentSick} duration={3} separator="," />
+                <CountUp end={this.state.data.confirmed} duration={3} separator="," />
                 : index === 1 ? 
-                <CountUp end={country_data.filter(obj => obj.name === this.state.country )[0].numberOfInfected} duration={3} separator="," />
+                <CountUp end={this.state.data.confirmed - this.state.data.deaths} duration={3} separator="," />
+                : index === 2 ? 
+                <CountUp separator="," end={this.state.data.deaths} duration={3} /> 
                 :
-                <CountUp separator="," end={country_data.filter(obj => obj.name === this.state.country )[0].numberOfDeath} duration={3} /> }
+                <CountUp separator="," end={this.state.v_data.vaccinated} duration={3} /> }
             </Title>
             <Title level={5} type="secondary" code>{formatDate()}</Title>
             <Title level={5}>
@@ -81,6 +88,7 @@ class Content5 extends React.PureComponent {
     });
 
     render() {
+      console.log(this.state);
       const { ...props } = this.props;
       const { dataSource } = props;
       delete props.dataSource;
@@ -95,8 +103,8 @@ class Content5 extends React.PureComponent {
               <Title>Country Information</Title>
               <Select size="large" defaultValue="Israel" onChange = {this.onChangeCountry} style={{ width: 200}}>
               {
-                  country_data.map((item, i) => {
-                      return <Option value={item.name}>{item.name}</Option>
+                  this.state.all_countries.map((item, i) => {
+                      return <Option value={item.id}>{item.name}</Option>
                   })
               }
               </Select>
