@@ -1,12 +1,16 @@
 # Covid 19 Data Dashboard
 
-Covid 19 dashboard analytics visualization developed with React and Ant Design.
+This is a simple Covid 19 dashboard analytics visualization developed with React and Ant Design.
+
+This dashboard uses the [disease.sh API](https://github.com/disease-sh/api)
+
 See Live Demo: https://covidanalytics.netlify.app/
 
 ## Technologies
 
 - React 
 - Ant Design
+- Ant Design Charts
 - react-countup
 
 ## Screenshots
