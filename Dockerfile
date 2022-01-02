@@ -1,11 +1,10 @@
-FROM node:latest-alpine
+FROM node:16-alpine
 
-# set working directory
 WORKDIR /app
 
-# install app dependencies
 COPY package.json ./
 
 COPY . ./
+
 RUN npm run build
 CMD ["npm", "run", "serve"]
