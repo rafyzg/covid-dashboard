@@ -15,8 +15,8 @@ See Live Demo: https://covidanalytics.netlify.app/
 
 ## Screenshots
 
-![Alt text](/screenshots/ContinentsData.PNG?raw=true "Continents Data")
-![Alt text](/screenshots/GlobalData.PNG?raw=true "Global Data")
+![Alt text](/screenshots/ContinentsData.png?raw=true "Continents Data")
+![Alt text](/screenshots/GlobalData.png?raw=true "Global Data")
 ![Alt text](/screenshots/CountryData.PNG?raw=true "Country Data")
 ![Alt text](/screenshots/covidtimeline.PNG?raw=true "Covid Timeline")
 
