@@ -331,7 +331,7 @@ export const Content50DataSource = {
           wrapper: { className: 'content5-block-content' },
           img: {
             children:
-              'https://img.icons8.com/external-wanicon-lineal-color-wanicon/512/000000/external-infected-virus-transmission-wanicon-lineal-color-wanicon.png',
+              'https://img.icons8.com/external-wanicon-lineal-color-wanicon/512/000000/external-bed-virus-mutation-wanicon-lineal-color-wanicon.png',
           },
           content: { children: 'Infected' },
         },
@@ -346,7 +346,7 @@ export const Content50DataSource = {
           wrapper: { className: 'content5-block-content' },
           img: {
             children:
-              'https://img.icons8.com/external-photo3ideastudio-lineal-color-photo3ideastudio/512/000000/external-healthy-virus-photo3ideastudio-lineal-color-photo3ideastudio.png',
+              'https://img.icons8.com/external-wanicon-lineal-color-wanicon/512/000000/external-immunity-virus-mutation-wanicon-lineal-color-wanicon.png',
           },
           content: { children: 'Recovered' },
         },
@@ -370,7 +370,7 @@ export const Content50DataSource = {
       },
       {
         name: 'block~kwtozuquues',
-        desc: 'Number of people vaccinated from COVID-19',
+        desc: 'Number of vaccine doses administered for COVID-19',
         className: 'block',
         md: 6,
         xs: 24,
