@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Select, Typography } from 'antd';
+import { Badge, Row, Col, Select, Typography } from 'antd';
 import { TweenOneGroup } from 'rc-tween-one';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import CountUp from 'react-countup';
@@ -28,7 +28,7 @@ class Content5 extends React.PureComponent {
 
   CountriesList = () => {
     Promise.all([
-      fetch(`${API_URL}/historical/${this.state.country}?lastdays=1`),
+      fetch(`${API_URL}/countries/${this.state.country}?yesterday=true`),
       fetch(`${API_URL}/apple/countries`),
       fetch(`${API_URL}/vaccine/coverage/countries/${this.state.country}?lastdays=1`),
     ])
@@ -36,12 +36,16 @@ class Content5 extends React.PureComponent {
       return Promise.all([res1.json(), res2.json(), res3.json()])
     })
     .then(([res1, res2, res3]) => {
+      console.log(res1);
       this.setState({
         ...this.state,
         data: {
-          cases: Object.values(res1.timeline.cases)[0],
-          deaths: Object.values(res1.timeline.deaths)[0],
-          recovered: Object.values(res1.timeline.recovered)[0],
+          cases: res1.cases,
+          deaths: res1.deaths,
+          recovered: res1.recovered,
+          todayCases: res1.todayCases,
+          todayDeaths: res1.todayDeaths,
+          todayRecovered: res1.todayRecovered,
           vaccinated: Object.values(res3.timeline)[0],
         },
         all_countries: res2,
@@ -54,7 +58,7 @@ class Content5 extends React.PureComponent {
 
   fetchCountryData = (e) => {
     Promise.all([
-      fetch(`${API_URL}/historical/${e}?lastdays=1`),
+      fetch(`${API_URL}/countries/${e}?yesterday=true`),
       fetch(`${API_URL}/vaccine/coverage/countries/${e}?lastdays=1`),
     ])
     .then(([res1, res2]) => {
@@ -64,11 +68,14 @@ class Content5 extends React.PureComponent {
       this.setState({
         ...this.state,
         data: {
-          cases: Object.values(res1.timeline.cases)[0],
-          deaths: Object.values(res1.timeline.deaths)[0],
-          recovered: Object.values(res1.timeline.recovered)[0],
+          cases: Object.values(res1.cases),
+          todayCases: res1.todayCases,
+          deaths: Object.values(res1.deaths)[0],
+          todayDeaths: res1.todayDeaths,
+          recovered: Object.values(res1.recovered)[0],
+          todayRecovered: res1.todayRecovered,
           vaccinated: Object.values(res2.timeline)[0],
-          bla:1,
+          
         },
       })
       console.log(this.state);
@@ -77,42 +84,77 @@ class Content5 extends React.PureComponent {
       console.log('fetch data failed', error);
     });
   }
-
   
   onChangeCountry = e => {
     this.setState({ country: e });
     this.fetchCountryData(e);
   }
-  getChildrenToRender = (data) =>
-  
-    data.map((item, index) => {
-      return (
-        <Col key={item.name} {...item}>
-          <a {...item.children.wrapper}>
-            <span {...item.children.img}>
-              <img src={item.children.img.children} height="90%" alt="img" />
-            </span>
-            <p {...item.children.content}>
-              {item.children.content.children}
-            </p>
-            <Title>
-              {index === 0 ?
-                <CountUp end={this.state.data.cases} duration={3} separator="," />
-                : index === 1 ? 
-                <CountUp end={this.state.data.recovered} duration={3} separator="," />
-                : index === 2 ? 
-                <CountUp separator="," end={this.state.data.deaths} duration={3} /> 
-                :
-                <CountUp separator="," end={this.state.data.vaccinated} duration={3} /> }
-            </Title>
-            <Title level={5} type="secondary" code>{formatDate()}</Title>
-            <Title level={5}>
-             {item.desc}
-            </Title>
-          </a>
-        </Col>
-      );
-    });
+
+    getChildrenToRender = (data) =>
+      data.map((item, index) => {
+        if(index === 3) {
+          return (
+            <Col key={item.name} {...item}>
+              <a {...item.children.wrapper}>
+                <span {...item.children.img}>
+                  <img src={item.children.img.children} height="90%" alt="img" />
+                </span>
+                <p {...item.children.content}>
+                  {item.children.content.children}
+                </p>
+                <Title>
+                  {index === 0 ?
+                    <CountUp end={this.state.data.cases} duration={3} separator="," />
+                    : index === 1 ? 
+                    <CountUp end={this.state.data.recovered} duration={3} separator="," />
+                    : index === 2 ? 
+                    <CountUp separator="," end={this.state.data.deaths} duration={3} /> 
+                    :
+                    <CountUp separator="," end={this.state.data.vaccinated} duration={3} /> }
+                </Title>
+                <Title level={5} type="secondary" code>{formatDate()}</Title>
+                <Title level={5}>
+                  {item.desc}
+                </Title>
+              </a>
+            </Col>
+          );
+        }
+        let badge = 0;
+        badge = index === 0 ? this.state.data.todayCases
+          : index === 1 ? this.state.data.todayRecovered
+          : index === 2 ? this.state.data.todayDeaths
+          : 0;
+
+        return (
+          <Col key={item.name} {...item}>
+            <Badge.Ribbon style={{ fontSize: 15}} color="#51b788" text={"+" + badge + " Today"}>
+              <a {...item.children.wrapper}>
+              <span {...item.children.img}>
+                <img src={item.children.img.children} height="90%" alt="img" />
+              </span>
+              <p {...item.children.content}>
+                {item.children.content.children}
+              </p>
+              <Title>
+                {index === 0 ?
+                  <CountUp end={this.state.data.cases} duration={3} separator="," />
+                  : index === 1 ? 
+                  <CountUp end={this.state.data.recovered} duration={3} separator="," />
+                  : index === 2 ? 
+                  <CountUp separator="," end={this.state.data.deaths} duration={3} /> 
+                  :
+                  <CountUp separator="," end={this.state.data.vaccinated} duration={3} /> }
+              </Title>
+              <Title level={5} type="secondary" code>{formatDate()}</Title>
+              <Title level={5}>
+                {item.desc}
+              </Title>
+            </a>
+            </Badge.Ribbon>
+          </Col>
+        );
+      });
 
     render() {
       console.log(this.state);
@@ -130,7 +172,6 @@ class Content5 extends React.PureComponent {
               <Title>Country Information</Title>
               <Select size="large" defaultValue="Israel" onChange = {this.onChangeCountry} style={{ width: 200}}>
               {
-                //['Israel','Mexico'].forEach(item =>  <Option>{item}</Option>)
                 this.state.all_countries.map((item,i) =>
                   <Option value={item}>{item}</Option>
                 )
