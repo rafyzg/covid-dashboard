@@ -68,17 +68,16 @@ class Content5 extends React.PureComponent {
       this.setState({
         ...this.state,
         data: {
-          cases: Object.values(res1.cases),
+          cases: res1.cases,
           todayCases: res1.todayCases,
-          deaths: Object.values(res1.deaths)[0],
+          deaths: res1.deaths,
           todayDeaths: res1.todayDeaths,
-          recovered: Object.values(res1.recovered)[0],
+          recovered: res1.recovered,
           todayRecovered: res1.todayRecovered,
           vaccinated: Object.values(res2.timeline)[0],
           
         },
       })
-      console.log(this.state);
     })
     .catch((error) => {
       console.log('fetch data failed', error);
