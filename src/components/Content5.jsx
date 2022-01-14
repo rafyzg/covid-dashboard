@@ -127,7 +127,7 @@ class Content5 extends React.PureComponent {
 
         return (
           <Col key={item.name} {...item}>
-            <Badge.Ribbon style={{ fontSize: 15}} color="#51b788" text={"+" + badge + " Today"}>
+            <Badge.Ribbon style={{ fontSize: 15}} color="#fadb14" text={badge + " Today"}>
               <a {...item.children.wrapper}>
               <span {...item.children.img}>
                 <img src={item.children.img.children} height="90%" alt="img" />
